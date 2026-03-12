@@ -1,4 +1,18 @@
 document.addEventListener('DOMContentLoaded', () => {
+  // inject PDF links from links.js
+  document.querySelectorAll('.reading-actions[data-pdf-id]').forEach(actions => {
+    const id = actions.dataset.pdfId;
+    const entry = PDF_LINKS[id];
+    if (!entry) return;
+    actions.querySelector('.btn-read').href     = entry.main;
+    actions.querySelector('.btn-download').href = entry.main;
+    if (entry.backup) {
+      const b = actions.querySelector('.btn-backup');
+      b.href   = entry.backup;
+      b.hidden = false;
+    }
+  });
+
   const cards = document.querySelectorAll('.chapter-card');
   const searchInput = document.getElementById('search');
   const noResults = document.querySelector('.no-results');
